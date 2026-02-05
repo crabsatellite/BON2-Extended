@@ -16,7 +16,7 @@ This fork extends BON2 to support **all Minecraft versions using MCP mappings** 
 | Gradle Version       | 2.9                | 8.5                           |
 | MC Version Support   | Gradle cache only  | 1.7.10 - 1.16.5 (25 versions) |
 | Offline Mode         | ❌ Requires mcpbot | ✅ Built-in mappings          |
-| Library Download     | ❌                 | ✅ 21 common libraries        |
+| Library Download     | ❌                 | ✅ 40 common libraries        |
 | CLI Mapping Download | ❌                 | ✅ `--download` command       |
 
 ## Supported Minecraft Versions
@@ -64,7 +64,7 @@ cd BON2
 ./gradlew fatJar
 ```
 
-Output: `build/libs/BON-2.4.0.CUSTOM-all.jar`
+Output: `build/libs/BON-3.0.0.CUSTOM-all.jar`
 
 ## Usage
 
@@ -72,35 +72,35 @@ Output: `build/libs/BON-2.4.0.CUSTOM-all.jar`
 
 ```bash
 # Download mappings for your MC version first
-java -jar BON-2.4.0.CUSTOM-all.jar --download --mappingsVer 1.12.2
+java -jar BON-3.0.0.CUSTOM-all.jar --download --mappingsVer 1.12.2
 
 # Deobfuscate a mod
-java -jar BON-2.4.0.CUSTOM-all.jar --inputJar MyMod-1.12.2.jar --mappingsVer 1.12.2
+java -jar BON-3.0.0.CUSTOM-all.jar --inputJar MyMod-1.12.2.jar --mappingsVer 1.12.2
 ```
 
 ### GUI Mode
 
 ```bash
-java -jar BON-2.4.0.CUSTOM-all.jar
+java -jar BON-3.0.0.CUSTOM-all.jar
 ```
 
 ### CLI Commands
 
 ```bash
 # List all available mappings
-java -jar BON-2.4.0.CUSTOM-all.jar --list
+java -jar BON-3.0.0.CUSTOM-all.jar --list
 
 # Download all mappings at once
-java -jar BON-2.4.0.CUSTOM-all.jar --download all
+java -jar BON-3.0.0.CUSTOM-all.jar --download all
 
 # Download specific mapping
-java -jar BON-2.4.0.CUSTOM-all.jar --download --mappingsVer 1.16.5-snapshot_20210309
+java -jar BON-3.0.0.CUSTOM-all.jar --download --mappingsVer 1.16.5-snapshot_20210309
 
 # Deobfuscate with shorthand version
-java -jar BON-2.4.0.CUSTOM-all.jar --inputJar input.jar --outputJar output.jar --mappingsVer 1.12.2
+java -jar BON-3.0.0.CUSTOM-all.jar --inputJar input.jar --outputJar output.jar --mappingsVer 1.12.2
 
 # Use custom mapping directory
-java -jar BON-2.4.0.CUSTOM-all.jar --inputJar input.jar --mappingsDir ./my-mappings
+java -jar BON-3.0.0.CUSTOM-all.jar --inputJar input.jar --mappingsDir ./my-mappings
 ```
 
 ### Library Download (for Decompilation)
@@ -109,32 +109,44 @@ After deobfuscation, you may want to decompile with CFR. Download common librari
 
 ```bash
 # List available libraries
-java -jar BON-2.4.0.CUSTOM-all.jar --list-libs
+java -jar BON-3.0.0.CUSTOM-all.jar --list-libs
 
 # Download all libraries
-java -jar BON-2.4.0.CUSTOM-all.jar --download-libs all
+java -jar BON-3.0.0.CUSTOM-all.jar --download-libs all
 
 # Download specific library by Maven coordinate
-java -jar BON-2.4.0.CUSTOM-all.jar --download-libs --lib com.google.code.gson:gson:2.8.0
+java -jar BON-3.0.0.CUSTOM-all.jar --download-libs --lib com.google.code.gson:gson:2.8.0
 ```
 
-Built-in libraries include: gson, guava, netty, log4j, lwjgl, asm, commons-io, and more.
+**40 built-in libraries** including:
+
+- JSON: gson, jackson-core/databind/annotations, json-simple
+- Apache: commons-io, commons-lang3, commons-codec, commons-compress, httpclient, httpcore, log4j
+- Game: lwjgl, lwjgl_util, jinput, jutils, joml, vecmath
+- Bytecode: asm, asm-commons, asm-tree, asm-analysis, asm-util
+- Network: netty-all
+- Utility: guava, fastutil, trove4j, icu4j, jna, jna-platform, oshi-core, jopt-simple, bcprov-jdk15on
+
+> **Note:** Mojang libraries (authlib, patchy) are not on Maven Central. Get them from `.minecraft/libraries/com/mojang/`.
 
 ## Complete Deobfuscation + Decompilation Workflow
 
 ```bash
 # 1. Download mappings
-java -jar BON-2.4.0.CUSTOM-all.jar --download --mappingsVer 1.12.2
+java -jar BON-3.0.0.CUSTOM-all.jar --download --mappingsVer 1.12.2
 
-# 2. Deobfuscate the mod JAR
-java -jar BON-2.4.0.CUSTOM-all.jar --inputJar MyMod-1.12.2.jar --mappingsVer 1.12.2
+# 2. Download common libraries for decompilation
+java -jar BON-3.0.0.CUSTOM-all.jar --download-libs all
 
-# 3. Download CFR decompiler
+# 3. Deobfuscate the mod JAR
+java -jar BON-3.0.0.CUSTOM-all.jar --inputJar MyMod-1.12.2.jar --mappingsVer 1.12.2
+
+# 4. Download CFR decompiler
 curl -O https://github.com/leibnitz27/cfr/releases/download/0.152/cfr-0.152.jar
 
-# 4. Decompile with dependencies
+# 5. Decompile with dependencies
 java -jar cfr-0.152.jar MyMod-1.12.2-deobf.jar --outputdir decompiled \
-  --extraclasspath "libs/forge.jar;libs/gson.jar;libs/guava.jar"
+  --extraclasspath "libs/*.jar"
 ```
 
 ## Changes from Original BON2
