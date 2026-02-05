@@ -1,60 +1,82 @@
-# BON2 - Forked with Java 17+ and Offline Support
+# BON2-Extended
 
-A rewrite for Immibis's bearded-octo-nemesis for ForgeGradle.
+**A fork of [BON2](https://github.com/Parker8283/BON2) with extended MCP mappings support, modernized for Java 17+**
 
-This fork includes modifications to make BON2 work with modern Java (17+) and to support offline operation when mcpbot.bspk.rs is unavailable.
+> **BON2** = Bearded Octo Nemesis 2, originally by [Immibis](https://github.com/immibis) and rewritten by [Parker8283](https://github.com/Parker8283)
 
-## Changes in this Fork
+## What's Different?
 
-### 1. Gradle 8.5 Compatibility
+This fork extends BON2 to support **all Minecraft versions using MCP mappings** (1.7.10 - 1.16.5), with modern Java compatibility and additional features.
 
-- Upgraded from Gradle 2.9 to Gradle 8.5
-- Updated `build.gradle` syntax (`compile` → `implementation`, etc.)
-- Updated deprecated API calls
+### Key Features
 
-### 2. Offline mcpbot.bspk.rs Fallback
+| Feature              | Original BON2      | BON2-Extended                 |
+| -------------------- | ------------------ | ----------------------------- |
+| Java Version         | Java 8             | Java 17+                      |
+| Gradle Version       | 2.9                | 8.5                           |
+| MC Version Support   | Gradle cache only  | 1.7.10 - 1.16.5 (25 versions) |
+| Offline Mode         | ❌ Requires mcpbot | ✅ Built-in mappings          |
+| Library Download     | ❌                 | ✅ 21 common libraries        |
+| CLI Mapping Download | ❌                 | ✅ `--download` command       |
 
-- The original mcpbot.bspk.rs server is no longer available
-- Added hardcoded fallback data for MCP mappings
-- Supported versions: 1.7.10, 1.8, 1.8.8, 1.8.9, 1.9, 1.9.4, 1.10.2, 1.11, 1.11.2, 1.12/1.12.2
+## Supported Minecraft Versions
 
-### 3. Fixed Duplicate JAR Entry Handling
+All versions using MCP mappings before Mojang official mappings (1.17+):
 
-- Added Set tracking to prevent "duplicate entry" errors when processing JARs with duplicate entries
+| Version    | Type     | Mapping Key                |
+| ---------- | -------- | -------------------------- |
+| **1.16.5** | Snapshot | `1.16.5-snapshot_20210309` |
+| **1.16.3** | Snapshot | `1.16.3-snapshot_20201028` |
+| **1.16.2** | Snapshot | `1.16.2-snapshot_20200916` |
+| **1.16.1** | Snapshot | `1.16.1-snapshot_20200723` |
+| **1.16**   | Snapshot | `1.16-snapshot_20200514`   |
+| **1.15.1** | Snapshot | `1.15.1-snapshot_20200220` |
+| **1.14.3** | Snapshot | `1.14.3-snapshot_20190719` |
+| **1.14.2** | Snapshot | `1.14.2-snapshot_20190608` |
+| **1.13**   | Snapshot | `1.13-snapshot_20180921`   |
+| **1.12.2** | Stable   | `1.12.2-stable_39`         |
+| **1.12.1** | Stable   | `1.12.1-stable_39`         |
+| **1.12**   | Stable   | `1.12-stable_39`           |
+| **1.11.2** | Stable   | `1.11.2-stable_32`         |
+| **1.11**   | Stable   | `1.11-stable_32`           |
+| **1.10.2** | Stable   | `1.10.2-stable_29`         |
+| **1.10**   | Stable   | `1.10-stable_29`           |
+| **1.9.4**  | Stable   | `1.9.4-stable_26`          |
+| **1.9**    | Stable   | `1.9-stable_24`            |
+| **1.8.9**  | Stable   | `1.8.9-stable_22`          |
+| **1.8.8**  | Stable   | `1.8.8-stable_20`          |
+| **1.8**    | Stable   | `1.8-stable_18`            |
+| **1.7.10** | Stable   | `1.7.10-stable_12`         |
 
-### 4. Fixed Version Parsing for Gradle Cache Format
+> **Note:** Minecraft 1.17+ uses Mojang official mappings and doesn't need BON2 for deobfuscation.
 
-- Fixed `getVersionFor()` to correctly parse `39-1.12` folder format (extracts `39`, not `1.12`)
+## Installation
 
-### 5. Mapping Download and Management (NEW!)
+### Download
 
-- Added `--download` command to download MCP mappings from Forge Maven
-- Added `--list` command to list all available mappings
-- Added `--mappingsDir` to use custom mapping directory
-- Mappings are downloaded to `mappings/` folder next to the JAR
-- Users can add custom mapping files for unsupported versions
+Download the latest release from [Releases](https://github.com/crabsatellite/BON2/releases) or build from source.
 
-## Available Mappings for Download
-
-| Minecraft Version | Mapping Key              |
-| ----------------- | ------------------------ |
-| 1.12.2            | 1.12.2-stable_39         |
-| 1.12.2            | 1.12.2-snapshot_20171003 |
-| 1.11.2            | 1.11.2-stable_32         |
-| 1.10.2            | 1.10.2-stable_29         |
-| 1.9.4             | 1.9.4-stable_26          |
-| 1.8.9             | 1.8.9-stable_22          |
-| 1.7.10            | 1.7.10-stable_12         |
-
-## Building
+### Build from Source
 
 ```bash
+git clone https://github.com/crabsatellite/BON2.git
+cd BON2
 ./gradlew fatJar
 ```
 
-The output JAR will be in `build/libs/BON-2.4.0.CUSTOM-all.jar`
+Output: `build/libs/BON-2.4.0.CUSTOM-all.jar`
 
 ## Usage
+
+### Quick Start (CLI)
+
+```bash
+# Download mappings for your MC version first
+java -jar BON-2.4.0.CUSTOM-all.jar --download --mappingsVer 1.12.2
+
+# Deobfuscate a mod
+java -jar BON-2.4.0.CUSTOM-all.jar --inputJar MyMod-1.12.2.jar --mappingsVer 1.12.2
+```
 
 ### GUI Mode
 
@@ -62,64 +84,125 @@ The output JAR will be in `build/libs/BON-2.4.0.CUSTOM-all.jar`
 java -jar BON-2.4.0.CUSTOM-all.jar
 ```
 
-### Download Mappings First (Recommended for new users)
+### CLI Commands
 
 ```bash
-# Download all available mappings
-java -jar BON-2.4.0.CUSTOM-all.jar --download
-
-# Or download specific version
-java -jar BON-2.4.0.CUSTOM-all.jar --download --mappingsVer 1.12.2-stable_39
-
-# List available mappings
+# List all available mappings
 java -jar BON-2.4.0.CUSTOM-all.jar --list
-```
 
-### CLI Mode - Deobfuscate a Mod
+# Download all mappings at once
+java -jar BON-2.4.0.CUSTOM-all.jar --download all
 
-```bash
-# Using downloaded mappings (auto-detected)
+# Download specific mapping
+java -jar BON-2.4.0.CUSTOM-all.jar --download --mappingsVer 1.16.5-snapshot_20210309
+
+# Deobfuscate with shorthand version
 java -jar BON-2.4.0.CUSTOM-all.jar --inputJar input.jar --outputJar output.jar --mappingsVer 1.12.2
 
-# Using Gradle cache mappings
-java -jar BON-2.4.0.CUSTOM-all.jar --inputJar input.jar --outputJar output.jar --mappingsVer stable_39
-
-# Using custom mapping directory
-java -jar BON-2.4.0.CUSTOM-all.jar --inputJar input.jar --outputJar output.jar --mappingsDir ./my-mappings --mappingsVer custom
+# Use custom mapping directory
+java -jar BON-2.4.0.CUSTOM-all.jar --inputJar input.jar --mappingsDir ./my-mappings
 ```
+
+### Library Download (for Decompilation)
+
+After deobfuscation, you may want to decompile with CFR. Download common libraries:
+
+```bash
+# List available libraries
+java -jar BON-2.4.0.CUSTOM-all.jar --list-libs
+
+# Download all libraries
+java -jar BON-2.4.0.CUSTOM-all.jar --download-libs all
+
+# Download specific library by Maven coordinate
+java -jar BON-2.4.0.CUSTOM-all.jar --download-libs --lib com.google.code.gson:gson:2.8.0
+```
+
+Built-in libraries include: gson, guava, netty, log4j, lwjgl, asm, commons-io, and more.
+
+## Complete Deobfuscation + Decompilation Workflow
+
+```bash
+# 1. Download mappings
+java -jar BON-2.4.0.CUSTOM-all.jar --download --mappingsVer 1.12.2
+
+# 2. Deobfuscate the mod JAR
+java -jar BON-2.4.0.CUSTOM-all.jar --inputJar MyMod-1.12.2.jar --mappingsVer 1.12.2
+
+# 3. Download CFR decompiler
+curl -O https://github.com/leibnitz27/cfr/releases/download/0.152/cfr-0.152.jar
+
+# 4. Decompile with dependencies
+java -jar cfr-0.152.jar MyMod-1.12.2-deobf.jar --outputdir decompiled \
+  --extraclasspath "libs/forge.jar;libs/gson.jar;libs/guava.jar"
+```
+
+## Changes from Original BON2
+
+### 1. Extended MCP Mappings Support
+
+- Added 25 mapping sets covering MC 1.7.10 - 1.16.5
+- All mappings downloadable from Forge Maven
+- No dependency on mcpbot.bspk.rs (defunct)
+
+### 2. Modernized Build System
+
+- Upgraded Gradle 2.9 → 8.5
+- Updated deprecated API calls
+- Java 17+ compatible
+
+### 3. New CLI Features
+
+- `--download` - Download MCP mappings
+- `--list` - List available mappings
+- `--download-libs` - Download common libraries
+- `--list-libs` - List available libraries
+
+### 4. Bug Fixes
+
+- Fixed duplicate JAR entry handling
+- Fixed version parsing for `39-1.12` format
+- Improved error handling
 
 ## Custom Mappings
 
-You can add custom mapping files for versions not available for download:
+For unsupported versions, create custom mapping files:
 
-1. Create a folder in `mappings/` directory (e.g., `mappings/1.6.4/`)
-2. Add `fields.csv` and `methods.csv` files
-3. Use with `--mappingsDir mappings/1.6.4`
+```
+mappings/
+└── 1.6.4/
+    ├── fields.csv
+    └── methods.csv
+```
 
-### Mapping File Format
-
-**fields.csv:**
+**fields.csv format:**
 
 ```csv
 searge,name,side,desc
 field_70170_p,worldObj,2,
-field_70165_t,posX,2,
 ```
 
-**methods.csv:**
+**methods.csv format:**
 
 ```csv
 searge,name,side,desc
 func_70003_b,shouldExecute,2,
-func_70037_a,readFromNBT,2,
 ```
 
-## Original Project
+Use with: `--mappingsDir mappings/1.6.4`
 
-- Original BON2 by [Parker8283](https://github.com/Parker8283/BON2)
-- Old releases available in releases tab
-- Jenkins builds at [ci.tterrag.com](http://ci.tterrag.com/job/BON2/) (may be unavailable)
+## Credits
+
+- **Original BON2**: [Parker8283](https://github.com/Parker8283/BON2)
+- **Original BON (v1)**: [Immibis](https://github.com/immibis)
+- **MCP Mappings**: [MCPBot Team](http://www.modcoderpack.com/)
 
 ## License
 
-This project is licensed under the same terms as the original BON2 project.
+This project is licensed under **LGPL v3**, the same license as the original BON2 project.
+
+See [LICENSE](LICENSE) for details.
+
+---
+
+_This fork is maintained by [@crabsatellite](https://github.com/crabsatellite) for the Minecraft modding community._
