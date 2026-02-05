@@ -1,8 +1,8 @@
 # BON2-Extended
 
-**A fork of [BON2](https://github.com/Parker8283/BON2) with extended MCP mappings support, modernized for Java 17+**
+**A fork of [BON2](https://github.com/tterrag1098/BON2) with extended MCP mappings support, modernized for Java 17+**
 
-> **BON2** = Bearded Octo Nemesis 2, originally by [Immibis](https://github.com/immibis) and rewritten by [Parker8283](https://github.com/Parker8283)
+> **BON2** = Bearded Octo Nemesis 2, maintained by [tterrag1098](https://github.com/tterrag1098), originally rewritten by [Parker8283](https://github.com/Parker8283) from [Immibis's BON](https://github.com/immibis)
 
 ## What's Different?
 
@@ -205,8 +205,9 @@ Use with: `--mappingsDir mappings/1.6.4`
 
 ## Credits
 
-- **Original BON2**: [Parker8283](https://github.com/Parker8283/BON2)
-- **Original BON (v1)**: [Immibis](https://github.com/immibis)
+- **BON2 Maintainer**: [tterrag1098](https://github.com/tterrag1098/BON2) (primary upstream repository)
+- **BON2 Original Rewrite**: [Parker8283](https://github.com/Parker8283)
+- **BON (v1)**: [Immibis](https://github.com/immibis)
 - **MCP Mappings**: [MCPBot Team](http://www.modcoderpack.com/)
 
 ## License
