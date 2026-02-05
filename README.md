@@ -54,13 +54,13 @@ All versions using MCP mappings before Mojang official mappings (1.17+):
 
 ### Download
 
-Download the latest release from [Releases](https://github.com/crabsatellite/BON2/releases) or build from source.
+Download the latest release from [Releases](https://github.com/crabsatellite/BON2-Extended/releases) or build from source.
 
 ### Build from Source
 
 ```bash
-git clone https://github.com/crabsatellite/BON2.git
-cd BON2
+git clone https://github.com/crabsatellite/BON2-Extended.git
+cd BON2-Extended
 ./gradlew fatJar
 ```
 
@@ -218,4 +218,4 @@ See [LICENSE](LICENSE) for details.
 
 ---
 
-_This fork is maintained by [@crabsatellite](https://github.com/crabsatellite) for the Minecraft modding community._
+_This fork is maintained by [@crabsatellite](https://github.com/crabsatellite/BON2-Extended) for the Minecraft modding community._
